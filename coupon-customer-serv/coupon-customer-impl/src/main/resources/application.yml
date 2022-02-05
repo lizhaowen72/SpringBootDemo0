@@ -71,4 +71,7 @@ spring:
 logging:
   level:
     com.broadview.coupon: debug
+    com.geekbang.coupon.customer.fegin.TemplateService: debug
+    com.geekbang.coupon.customer.fegin.CalculationService: debug
+
 
