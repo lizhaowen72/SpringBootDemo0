@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: coupon-customer-serv
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.255.134:8848
+        file-extension: yml
+        namespace: dev
+        group: DEFAULT_GROUP
+        timeout: 5000
+        config-long-poll-timeout: 1000
+        config-retry-time: 100000
+        max-retry: 3
+        refresh-enabled: true
+        enable-remote-sync-config: true
+        extension-configs:
+          - dataId: coupon-config.yml
+            group: EXT_GROUP
+            refresh: true
+          - dataId: rabbitmq-config.yml
+            group: EXT_GROUP
+            refresh: true

@@ -123,6 +123,7 @@ public class CouponTemplateServiceImpl implements CouponTemplateService {
      */
     @Override
     public CouponTemplateInfo loadTemplateInfo(Long id) {
+        //System.out.println(1/0);
         Optional<CouponTemplate> template = templateDao.findById(id);
         return template.map(CouponTemplateConverter::convertToTemplateInfo).orElse(null);
     }

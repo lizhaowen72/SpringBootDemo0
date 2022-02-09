@@ -10,21 +10,31 @@ import com.geekbang.coupon.customer.dao.entity.Coupon;
 import com.geekbang.coupon.template.api.beans.CouponInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
+@RefreshScope
 @RestController
 @RequestMapping("coupon-customer")
 public class CouponCustomerController {
+
+    @Value("${disableCouponRequest:false}")
+    private Boolean disableCoupon;
 
     @Autowired
     private CouponCustomerService customerService;
 
     @PostMapping("requestCoupon")
     public Coupon requestCoupon(@Valid @RequestBody RequestCoupon request) {
+        if (disableCoupon){
+            log.info("暂停领取优惠券");
+            return null;
+        }
         return customerService.requestCoupon(request);
     }
 

@@ -1,28 +1,10 @@
 server:
-  port: 20002
+  port: 10002
   # 在返回给页面的结果里，把错误信息添加到message里
   error:
     include-message: always
 
 spring:
-  application:
-    name: coupon-customer-serv
-  datasource:
-    # mysql数据源
-    username: root
-    password: 123456
-    url: jdbc:mysql://192.168.255.134:3306/geekbang_coupon_db?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    # 连接池
-    hikari:
-      pool-name: GeekbangCouponHikari
-      connection-timeout: 5000
-      idle-timeout: 30000
-      maximum-pool-size: 10
-      minimum-idle: 5
-      max-lifetime: 60000
-      auto-commit: true
   jpa:
     show-sql: true
     hibernate:
@@ -36,7 +18,7 @@ spring:
     nacos:
       discovery:
         # Nacos的服务注册地址，可以配置多个，逗号分隔
-        server-addr: 192.168.255.134:8848,192.168.255.134:8948
+        server-addr: 192.168.255.134:8848
         # 服务注册到Nacos上的名称，一般不用配置
         service: coupon-customer-serv
         # nacos客户端向服务端发送心跳的时间间隔，时间单位其实是ms
@@ -71,7 +53,23 @@ spring:
 logging:
   level:
     com.broadview.coupon: debug
-    com.geekbang.coupon.customer.fegin.TemplateService: debug
-    com.geekbang.coupon.customer.fegin.CalculationService: debug
+    com.geekbang.coupon.customer.feign.TemplateService: debug
+    com.geekbang.coupon.customer.feign.CalculationService: debug
 
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 1000
+        readTimeout: 2000
+      coupon-template-serv:
+        connectTimeout: 1000
+        readTimeout: 1500
+  circuitbreaker:
+    enabled: true
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

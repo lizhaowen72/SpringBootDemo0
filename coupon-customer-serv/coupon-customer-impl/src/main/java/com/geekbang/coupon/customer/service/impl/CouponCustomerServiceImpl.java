@@ -28,17 +28,12 @@ import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.geekbang.coupon.customer.constant.Constant.TRAFFIC_VERSION;
-
 @Slf4j
 @Service
 public class CouponCustomerServiceImpl implements CouponCustomerService {
 
     @Autowired
     private CouponDao couponDao;
-
-    @Autowired
-    private WebClient.Builder webClientBuilder;
 
     @Autowired
     private TemplateService templateService;
@@ -116,7 +111,6 @@ public class CouponCustomerServiceImpl implements CouponCustomerService {
             log.error("invalid template id={}", request.getCouponTemplateId());
             throw new IllegalArgumentException("Invalid template id");
         }
-
         // 模板不能过期
         long now = Calendar.getInstance().getTimeInMillis();
         Long expTime = templateInfo.getRule().getDeadline();
