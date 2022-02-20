@@ -1,10 +1,13 @@
 package com.geekbang.coupon.template.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.fastjson.JSON;
 import com.geekbang.coupon.template.api.beans.CouponTemplateInfo;
 import com.geekbang.coupon.template.api.beans.PagedCouponTemplateInfo;
 import com.geekbang.coupon.template.api.beans.TemplateSearchParams;
 import com.geekbang.coupon.template.service.CouponTemplateService;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +39,7 @@ public class CouponTemplateController {
 
     // 读取优惠券
     @GetMapping("/getTemplate")
+    @SentinelResource(value = "getTemplate")
     public CouponTemplateInfo getTemplate(@RequestParam("id") Long id){
         log.info("Load template, id={}", id);
         return couponTemplateService.loadTemplateInfo(id);
@@ -43,9 +47,23 @@ public class CouponTemplateController {
 
     // 批量获取
     @GetMapping("/getBatch")
+    @SentinelResource(value = "getTemplateInBatch",blockHandler = "getTemplateInBatch_block",fallback = "getTemplateInBatch_fallback")
     public Map<Long, CouponTemplateInfo> getTemplateInBatch(@RequestParam("ids") Collection<Long> ids) {
         log.info("getTemplateInBatch: {}", JSON.toJSONString(ids));
+        if (ids.size()==2){
+            throw  new RuntimeException("异常");
+        }
         return couponTemplateService.getTemplateInfoMap(ids);
+    }
+
+    public Map<Long,CouponTemplateInfo> getTemplateInBatch_block(Collection<Long> ids, BlockException blockException){
+        log.info("block接口被限流");
+        return Maps.newHashMap();
+    }
+
+    public Map<Long,CouponTemplateInfo> getTemplateInBatch_fallback(Collection<Long> ids){
+        log.info("fallback接口被降级");
+        return Maps.newHashMap();
     }
 
     // 搜索模板
