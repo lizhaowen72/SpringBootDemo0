@@ -43,6 +43,22 @@ spring:
         watch:
           enabled: true
         watch-delay: 30000
+  sleuth:
+    sampler:
+      probability: 1.0
+      rate: 1000
+  zipkin:
+    sender:
+      type: rabbit
+    rabbitmq:
+      addresses: 192.168.255.134:5672
+      queue: zipkin
+  rabbitmq:
+    host: 192.168.255.134
+    port: 5672
+    username: lizhaowen
+    password: 123456
+    virtual-host: /
 #  redis:
 #    database: 0
 #    host: localhost

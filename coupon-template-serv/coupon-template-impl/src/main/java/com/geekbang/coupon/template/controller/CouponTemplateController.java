@@ -50,9 +50,9 @@ public class CouponTemplateController {
     @SentinelResource(value = "getTemplateInBatch",blockHandler = "getTemplateInBatch_block",fallback = "getTemplateInBatch_fallback")
     public Map<Long, CouponTemplateInfo> getTemplateInBatch(@RequestParam("ids") Collection<Long> ids) {
         log.info("getTemplateInBatch: {}", JSON.toJSONString(ids));
-        if (ids.size()==2){
-            throw  new RuntimeException("异常");
-        }
+//        if (ids.size()==2){
+//            throw  new RuntimeException("异常");
+//        }
         return couponTemplateService.getTemplateInfoMap(ids);
     }
 

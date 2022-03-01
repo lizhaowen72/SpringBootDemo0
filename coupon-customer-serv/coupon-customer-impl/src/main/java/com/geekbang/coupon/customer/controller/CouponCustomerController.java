@@ -33,6 +33,7 @@ public class CouponCustomerController {
     @PostMapping("requestCoupon")
     @SentinelResource(value = "requestCoupon")
     public Coupon requestCoupon(@Valid @RequestBody RequestCoupon request) {
+        log.info("测试链路追踪");
         if (disableCoupon){
             log.info("暂停领取优惠券");
             return null;

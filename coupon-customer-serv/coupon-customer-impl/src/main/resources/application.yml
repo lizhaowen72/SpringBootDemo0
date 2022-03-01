@@ -53,6 +53,22 @@ spring:
       transport:
         port: 8719
         dashboard: 192.168.255.134:8080
+  sleuth:
+    sampler:
+      probability: 1.0
+      rate: 1000
+  zipkin:
+    sender:
+      type: rabbit
+    rabbitmq:
+      addresses: 192.168.255.134:5672
+      queue: zipkin
+  rabbitmq:
+    host: 192.168.255.134
+    port: 5672
+    username: lizhaowen
+    password: 123456
+    virtual-host: /
 
 logging:
   level:
