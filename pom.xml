@@ -6,7 +6,6 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.4.2</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.geekbang</groupId>
     <artifactId>geekbang-coupon</artifactId>
@@ -16,6 +15,7 @@
         <module>coupon-calculation-serv</module>
         <module>coupon-customer-serv</module>
         <module>coupon-template-serv</module>
+        <module>middleware</module>
     </modules>
 
 

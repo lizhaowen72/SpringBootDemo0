@@ -1,0 +1,33 @@
+server:
+  port: 30000
+spring:
+  redis:
+    host: 192.168.255.134:8848
+    port: 6379
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.255.134:8848
+        heart-beat-interval: 5000
+        heart-beat-timeout: 15000
+        cluster-name: Cluster-A
+        namespace: dev
+        group: myGroup
+        register-enabled: true
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins:
+              - "http://192.168.255.134:10000"
+              - "https://www.geekbang.com"
+            expose-headers: "*"
+              allowed-methods: "*"
+              allow-credentials: true
+              allowed-headers: "*"
+              # 浏览器缓存时间
+              max-age: 1000
